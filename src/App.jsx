@@ -11,7 +11,6 @@ const App = () => {
   const theme = useTheme();
   const isMidScreen = useMediaQuery(theme.breakpoints.up('md'));
   const ariaLabel = { 'aria-label': 'description' };
-  const [formSubmit, setFormSubmit] = useState(false);
 
   const [selectedValue, setSelectedValue] = useState('None');
   const [selectedDate, handleDateChange] = React.useState(null);
@@ -70,12 +69,12 @@ const App = () => {
       alert("Please select atleast one day")
       return
     }
-    alert("Form submit")
     console.log('Form values submitted:', values);
-    // You can add your logic for form submission here
     setOpenSnackbar(true)
 
     // Rest form
+    resetForm();
+
 
 
   };
