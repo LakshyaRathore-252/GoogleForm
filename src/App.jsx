@@ -5,7 +5,7 @@ import { Formik, Field, Form, FieldArray } from 'formik';
 import { ErrorMessage } from 'formik';
 // import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-
+import { Skeleton } from '@mui/material';
 const App = () => {
 
   const theme = useTheme();
@@ -16,6 +16,11 @@ const App = () => {
   const [selectedValue, setSelectedValue] = useState('None');
   const [selectedDate, handleDateChange] = React.useState(null);
 
+  const [imageLoaded, setImageLoaded] = React.useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
@@ -94,6 +99,10 @@ const App = () => {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
+  setTimeout(( ) => {
+    setImageLoaded(true)
+  },1000)
+
   return (
 
     <Container sx={{ display: 'flex', flexDirection: 'column', rowGap: '2rem' }} >
@@ -104,7 +113,17 @@ const App = () => {
       >
         <Form>
           {/* Image */}
-          <Stack justifyContent={'center'} alignItems={'center'} p={2} >
+          <Stack justifyContent={'center'} alignItems={'center'} p={2}>
+            <Skeleton
+              variant="rectangular"
+              width={770}
+              height={192.5}
+              style={{
+                borderRadius: '8px',
+                display: imageLoaded ? 'none' : 'block',
+              }}
+              animation="wave"
+            />
             <img
               style={{
                 borderRadius: '8px',
@@ -114,15 +133,15 @@ const App = () => {
                 height: '192.5px',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-
                 width: '770px',
+                display: imageLoaded ? 'block' : 'none',
               }}
               loading='lazy'
               src='https://rb.gy/ufrf42'
-              alt='Even-Image'
+              alt='Event-Image'
+              onLoad={handleImageLoad}
             />
           </Stack>
-
           {/* Event Resgisteration */}
           <Box marginLeft={isMidScreen ? 23 : 0} marginTop={2} p={isMidScreen ? 4 : 2}
             sx={{
@@ -253,7 +272,7 @@ const App = () => {
           <Box marginLeft={isMidScreen ? 23 : 0} marginTop={2} p={isMidScreen ? 4 : 2}
             sx={{
               maxHeight: '35vh',
-              maxWidth: '90vw',
+              maxWidth: '80vw',
               width: '700px',
               height: '80.5px',
               borderRadius: '10px',
